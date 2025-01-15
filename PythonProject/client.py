@@ -29,10 +29,8 @@ try:
             user_answer = input("Cevabınızı girin (Süre 10 sn): ")
             client_socket.sendall(user_answer.encode('utf-8'))
 
-except ConnectionResetError:
-    print("\nSunucu bağlantıyı kapattı.")
-except BrokenPipeError:
-    print("\nBağlantı beklenenden önce kesildi.")
+except (ConnectionResetError, socket.timeout) as e:
+    print("\nSunucu bağlantıyı kapattı veya süre doldu.")
 finally:
     print("\nBağlantı kapatılıyor...")
     client_socket.close()
